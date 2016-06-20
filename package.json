@@ -1,0 +1,46 @@
+{
+  "name": "egg-utils",
+  "version": "1.0.0",
+  "description": "Utils for all egg projects",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "test": "NODE_ENV=test ava",
+    "cov": "NODE_ENV=test nyc ava && nyc report --reporter=json --reporter=lcov",
+    "lint": "eslint *.js test --fix",
+    "ci": "npm run lint && npm run cov",
+    "autod": "autod -w --prefix='^'"
+  },
+  "keywords": [
+    "egg",
+    "utils"
+  ],
+  "author": "fengmk2 <fengmk2@gmail.com> (https://fengmk2.com)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eggjs/egg-utils.git"
+  },
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "autod": "^2.6.1",
+    "ava": "^0.15.2",
+    "egg-ci": "^1.0.2",
+    "eslint": "^2.13.0",
+    "eslint-config-egg": "^2.0.0",
+    "nyc": "^6.6.1"
+  },
+  "engine": {
+    "node": ">=4.0.0"
+  },
+  "ava": {
+    "files": [
+      "test/**/*.test.js"
+    ]
+  },
+  "ci": {
+    "version": "4, 6"
+  }
+}
