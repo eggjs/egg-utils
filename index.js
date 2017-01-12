@@ -11,7 +11,7 @@ const path = require('path');
  * @param {Array} [eggNames] - egg names, default is ['egg']
  * @return {String} framework or egg dir path
  */
-exports.getFrameworkOrEggPath = function(cwd, eggNames) {
+exports.getFrameworkOrEggPath = (cwd, eggNames) => {
   eggNames = eggNames || ['egg'];
   const moduleDir = path.join(cwd, 'node_modules');
   if (!fs.existsSync(moduleDir)) {
@@ -19,6 +19,17 @@ exports.getFrameworkOrEggPath = function(cwd, eggNames) {
   }
 
   // try to get framework
+
+  // 1. try to read egg.framework property on package.json
+  const pkgFile = path.join(cwd, 'package.json');
+  if (fs.existsSync(pkgFile)) {
+    const pkg = require(pkgFile);
+    if (pkg.egg && pkg.egg.framework) {
+      return path.join(moduleDir, pkg.egg.framework);
+    }
+  }
+
+  // 2. try the module dependencies includes eggNames
   const names = fs.readdirSync(moduleDir);
   for (const name of names) {
     const pkgfile = path.join(moduleDir, name, 'package.json');
