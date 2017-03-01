@@ -33,14 +33,17 @@
     "nyc": "^6.6.1"
   },
   "engine": {
-    "node": ">=6.0.0"
+    "node": ">=4.0.0"
   },
   "ava": {
     "files": [
       "test/**/*.test.js"
     ]
   },
+  "publishConfig": {
+    "tag": "release-1"
+  },
   "ci": {
-    "version": "6, 7"
+    "version": "4, 6, 7"
   }
 }
