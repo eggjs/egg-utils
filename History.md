@@ -1,8 +1,9 @@
 
-1.2.0 / 2017-03-01
+2.0.0 / 2017-03-01
 ==================
 
   * feat: move getFrameworkPath from egg-cluster (#2)
+  * deps: only support node >= 6.0.0
 
 1.1.0 / 2017-01-13
 ==================
