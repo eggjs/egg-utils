@@ -1,6 +1,7 @@
 sudo: false
 language: node_js
 node_js:
+  - '4'
   - '6'
   - '7'
 install:
@@ -8,4 +9,4 @@ install:
 script:
   - npm run ci
 after_script:
-  - npm i codecov && codecov
+  - npminstall codecov && codecov
