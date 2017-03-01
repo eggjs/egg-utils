@@ -3,6 +3,12 @@
 const fs = require('fs');
 const path = require('path');
 
+[
+  require('./lib/framework'),
+  { getFrameworkOrEggPath },
+]
+.forEach(obj => Object.assign(exports, obj));
+
 /**
  * Try to get framework dir path
  * If can't find any framework, try to find egg dir path
@@ -10,9 +16,10 @@ const path = require('path');
  * @param {String} cwd - current work path
  * @param {Array} [eggNames] - egg names, default is ['egg']
  * @return {String} framework or egg dir path
+ * @deprecated
  */
-exports.getFrameworkOrEggPath = (cwd, eggNames) => {
-  eggNames = eggNames || ['egg'];
+function getFrameworkOrEggPath(cwd, eggNames) {
+  eggNames = eggNames || [ 'egg' ];
   const moduleDir = path.join(cwd, 'node_modules');
   if (!fs.existsSync(moduleDir)) {
     return '';
@@ -55,4 +62,4 @@ exports.getFrameworkOrEggPath = (cwd, eggNames) => {
   }
 
   return '';
-};
+}
