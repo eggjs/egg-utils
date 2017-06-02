@@ -13,5 +13,5 @@ module.exports = {
     'egg-ci',
     'eslint',
     'eslint-config-egg',
-  ]
+  ],
 };
