@@ -1,4 +1,10 @@
 
+2.2.0 / 2017-06-02
+==================
+
+  * feat: check baseDir and framework (#7)
+  * feat: add getPlugins and getLoadUnits (#6)
+
 2.1.0 / 2017-03-02
 ==================
 
