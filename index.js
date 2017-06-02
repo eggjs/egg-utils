@@ -5,6 +5,7 @@ const path = require('path');
 
 [
   require('./lib/framework'),
+  require('./lib/plugin'),
   { getFrameworkOrEggPath },
 ]
 .forEach(obj => Object.assign(exports, obj));
