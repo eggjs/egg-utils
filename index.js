@@ -2,13 +2,14 @@
 
 const fs = require('fs');
 const path = require('path');
+const utility = require('utility');
 
 [
   require('./lib/framework'),
   require('./lib/plugin'),
   { getFrameworkOrEggPath },
 ]
-.forEach(obj => Object.assign(exports, obj));
+  .forEach(obj => Object.assign(exports, obj));
 
 /**
  * Try to get framework dir path
@@ -31,7 +32,7 @@ function getFrameworkOrEggPath(cwd, eggNames) {
   // 1. try to read egg.framework property on package.json
   const pkgFile = path.join(cwd, 'package.json');
   if (fs.existsSync(pkgFile)) {
-    const pkg = require(pkgFile);
+    const pkg = utility.readJSONSync(pkgFile);
     if (pkg.egg && pkg.egg.framework) {
       return path.join(moduleDir, pkg.egg.framework);
     }
@@ -44,7 +45,7 @@ function getFrameworkOrEggPath(cwd, eggNames) {
     if (!fs.existsSync(pkgfile)) {
       continue;
     }
-    const pkg = require(pkgfile);
+    const pkg = utility.readJSONSync(pkgfile);
     if (pkg.dependencies) {
       for (const eggName of eggNames) {
         if (pkg.dependencies[eggName]) {
