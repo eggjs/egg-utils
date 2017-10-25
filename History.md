@@ -1,4 +1,10 @@
 
+2.3.0 / 2017-10-26
+==================
+
+**others**
+  * [[`42e4394`](http://github.com/eggjs/egg-utils/commit/42e43949997a98c1caacddced05ad8f307cbe1ca)] - refactor: use readJSON instead of require (#8) (Haoliang Gao <<sakura9515@gmail.com>>)
+
 2.2.0 / 2017-06-02
 ==================
 
