@@ -125,7 +125,7 @@ describe('test/plugin.test.js', () => {
     beforeEach(() => cpy('**/*', tmp, { cwd }));
     afterEach(() => rimraf(tmp));
 
-    it('should get config using npm', function* () {
+    it('should get configs using npm', function* () {
       yield runscript('npm -v && npm install', { cwd: tmp });
 
       const args = JSON.stringify({
@@ -134,12 +134,12 @@ describe('test/plugin.test.js', () => {
       });
       yield coffee.fork(bin, [ args ], { cwd: tmp })
         .debug()
-        .expect('stdout', /get app config env,name,keys,proxy,protocolHeaders,ipHeaders,hostHeaders,pkg,baseDir,HOME,rundir,dump,notfound,siteFile,bodyParser,logger,httpclient,coreMiddleware,jsonp,workerStartTimeout,coreMiddlewares,appMiddlewares,appMiddleware/)
+        .expect('stdout', /get app configs env,name,keys,proxy,protocolHeaders,ipHeaders,hostHeaders,pkg,baseDir,HOME,rundir,dump,notfound,siteFile,bodyParser,logger,httpclient,coreMiddleware,jsonp,workerStartTimeout,coreMiddlewares,appMiddlewares,appMiddleware/)
         .expect('code', 0)
         .end();
     });
 
-    it('should get config using npminstall', function* () {
+    it('should get configs using npminstall', function* () {
       yield runscript('npminstall', { cwd: tmp });
 
       const args = JSON.stringify({
@@ -148,7 +148,7 @@ describe('test/plugin.test.js', () => {
       });
       yield coffee.fork(bin, [ args ], { cwd: tmp })
         .debug()
-        .expect('stdout', /get app config env,name,keys,proxy,protocolHeaders,ipHeaders,hostHeaders,pkg,baseDir,HOME,rundir,dump,notfound,siteFile,bodyParser,logger,httpclient,coreMiddleware,jsonp,workerStartTimeout,coreMiddlewares,appMiddlewares,appMiddleware/)
+        .expect('stdout', /get app configs env,name,keys,proxy,protocolHeaders,ipHeaders,hostHeaders,pkg,baseDir,HOME,rundir,dump,notfound,siteFile,bodyParser,logger,httpclient,coreMiddleware,jsonp,workerStartTimeout,coreMiddlewares,appMiddlewares,appMiddleware/)
         .expect('code', 0)
         .end();
     });
