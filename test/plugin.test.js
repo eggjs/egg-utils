@@ -119,4 +119,38 @@ describe('test/plugin.test.js', () => {
         .end();
     });
   });
+
+  describe('getConfig', () => {
+    const bin = path.join(cwd, 'get_config.js');
+    beforeEach(() => cpy('**/*', tmp, { cwd }));
+    afterEach(() => rimraf(tmp));
+
+    it('should get configs using npm', function* () {
+      yield runscript('npm -v && npm install', { cwd: tmp });
+
+      const args = JSON.stringify({
+        baseDir: tmp,
+        framework: path.join(tmp, 'node_modules/egg'),
+      });
+      yield coffee.fork(bin, [ args ], { cwd: tmp })
+        .debug()
+        .expect('stdout', /get app configs env,name,keys,proxy,protocolHeaders,ipHeaders,hostHeaders,pkg,baseDir,HOME,rundir,dump,notfound,siteFile,bodyParser,logger,httpclient,coreMiddleware,jsonp,workerStartTimeout,coreMiddlewares,appMiddlewares,appMiddleware/)
+        .expect('code', 0)
+        .end();
+    });
+
+    it('should get configs using npminstall', function* () {
+      yield runscript('npminstall', { cwd: tmp });
+
+      const args = JSON.stringify({
+        baseDir: tmp,
+        framework: path.join(tmp, 'node_modules/egg'),
+      });
+      yield coffee.fork(bin, [ args ], { cwd: tmp })
+        .debug()
+        .expect('stdout', /get app configs env,name,keys,proxy,protocolHeaders,ipHeaders,hostHeaders,pkg,baseDir,HOME,rundir,dump,notfound,siteFile,bodyParser,logger,httpclient,coreMiddleware,jsonp,workerStartTimeout,coreMiddlewares,appMiddlewares,appMiddleware/)
+        .expect('code', 0)
+        .end();
+    });
+  });
 });
