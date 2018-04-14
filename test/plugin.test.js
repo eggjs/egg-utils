@@ -16,7 +16,7 @@ describe('test/plugin.test.js', () => {
 
   describe('getPlugins', () => {
     const bin = path.join(cwd, 'get_plugin.js');
-    beforeEach(() => cpy('**/*', tmp, { cwd }));
+    beforeEach(() => cpy('**/*', tmp, { cwd, nodir: true, parents: true }));
     afterEach(() => rimraf(tmp));
 
     it('should get plugins using npm', function* () {
@@ -28,7 +28,7 @@ describe('test/plugin.test.js', () => {
       });
       yield coffee.fork(bin, [ args ], { cwd: tmp })
         .debug()
-        .expect('stdout', /get all plugins onerror,session,i18n,watcher,multipart,security,development,logrotator,schedule,static,jsonp,view/)
+        .expect('stdout', 'get all plugins onerror,session,i18n,watcher,multipart,security,development,logrotator,schedule,static,jsonp,view\n')
         .expect('code', 0)
         .end();
     });
@@ -42,7 +42,22 @@ describe('test/plugin.test.js', () => {
       });
       yield coffee.fork(bin, [ args ], { cwd: tmp })
         .debug()
-        .expect('stdout', /get all plugins onerror,session,i18n,watcher,multipart,security,development,logrotator,schedule,static,jsonp,view/)
+        .expect('stdout', 'get all plugins onerror,session,i18n,watcher,multipart,security,development,logrotator,schedule,static,jsonp,view\n')
+        .expect('code', 0)
+        .end();
+    });
+
+    it('should get plugins using npminstall on test', function* () {
+      yield runscript('npminstall', { cwd: tmp });
+
+      const args = JSON.stringify({
+        baseDir: tmp,
+        framework: path.join(tmp, 'node_modules/egg'),
+        env: 'test',
+      });
+      yield coffee.fork(bin, [ args ], { cwd: tmp })
+        .debug()
+        .expect('stdout', 'get all plugins onerror,session,i18n,watcher,multipart,security,development,logrotator,schedule,static,jsonp,view,p\n')
         .expect('code', 0)
         .end();
     });
@@ -50,7 +65,7 @@ describe('test/plugin.test.js', () => {
 
   describe('getLoadUnits', () => {
     const bin = path.join(cwd, 'get_loadunit.js');
-    beforeEach(() => cpy('**/*', tmp, { cwd }));
+    beforeEach(() => cpy('**/*', tmp, { cwd, nodir: true, parents: true }));
     afterEach(() => rimraf(tmp));
 
     it('should get plugins using npm', function* () {
@@ -122,7 +137,7 @@ describe('test/plugin.test.js', () => {
 
   describe('getConfig', () => {
     const bin = path.join(cwd, 'get_config.js');
-    beforeEach(() => cpy('**/*', tmp, { cwd }));
+    beforeEach(() => cpy('**/*', tmp, { cwd, nodir: true, parents: true }));
     afterEach(() => rimraf(tmp));
 
     it('should get configs using npm', function* () {
