@@ -28,7 +28,28 @@ $ npm i egg-utils
 
 ## API
 
-### `#getFrameworkOrEggPath(cwd[, eggNames])`
+### `getPlugins(options)`
+
+- {String} baseDir - the current directory of application
+- {String} framework - the directory of framework
+- {String} env - egg environment
+
+### `getLoadUnits(options)`
+
+- {String} baseDir - the current directory of application
+- {String} framework - the directory of framework
+- {String} env - egg environment
+
+### `getConfig(options)`
+
+- {String} baseDir - the current directory of application
+- {String} framework - the directory of framework
+- {String} env - egg environment
+
+### `getConfig(getFrameworkPath)`
+
+- {String} baseDir - the current directory of application
+- {String} framework - the directory of framework
 
 ## License
 
