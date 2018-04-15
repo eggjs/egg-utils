@@ -46,7 +46,7 @@ $ npm i egg-utils
 - {String} framework - the directory of framework
 - {String} env - egg environment
 
-### `getConfig(getFrameworkPath)`
+### `getFrameworkPath(options)`
 
 - {String} baseDir - the current directory of application
 - {String} framework - the directory of framework
