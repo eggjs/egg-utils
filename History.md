@@ -1,4 +1,14 @@
 
+2.4.0 / 2018-04-15
+==================
+
+**features**
+  * [[`737c851`](http://github.com/eggjs/egg-utils/commit/737c851272f1d50a103158d52359b536bc33f893)] - feat: env options for all utils (#10) (Haoliang Gao <<sakura9515@gmail.com>>)
+  * [[`99877f4`](http://github.com/eggjs/egg-utils/commit/99877f49941bb41cff49f692e75382bdb651cb07)] - feat: add getConfig (#9) (Kaicong Huang <<526672351@qq.com>>)
+
+**others**
+  * [[`6c37dd2`](http://github.com/eggjs/egg-utils/commit/6c37dd22ed653dfb21df218a270e0b83d3825e75)] - docs: fix readme (#11) (Haoliang Gao <<sakura9515@gmail.com>>)
+
 2.3.0 / 2017-10-26
 ==================
 
