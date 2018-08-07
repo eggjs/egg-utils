@@ -149,7 +149,7 @@ describe('test/plugin.test.js', () => {
       });
       yield coffee.fork(bin, [ args ], { cwd: tmp })
         .debug()
-        .expect('stdout', /get app configs env,name,keys,proxy,protocolHeaders,ipHeaders,hostHeaders,pkg,baseDir,HOME,rundir,dump,notfound,siteFile,bodyParser,logger,httpclient,coreMiddleware,jsonp,workerStartTimeout,coreMiddlewares,appMiddlewares,appMiddleware/)
+        .expect('stdout', /get app configs session,security,helper,jsonp,onerror,i18n,watcher,multipart,logrotator,static,view,env,name,keys,proxy,protocolHeaders,ipHeaders,hostHeaders,pkg,baseDir,HOME,rundir,dump,notfound,siteFile,bodyParser,logger,httpclient,coreMiddleware,workerStartTimeout,coreMiddlewares,appMiddlewares,appMiddleware/)
         .expect('code', 0)
         .end();
     });
@@ -163,7 +163,7 @@ describe('test/plugin.test.js', () => {
       });
       yield coffee.fork(bin, [ args ], { cwd: tmp })
         .debug()
-        .expect('stdout', /get app configs env,name,keys,proxy,protocolHeaders,ipHeaders,hostHeaders,pkg,baseDir,HOME,rundir,dump,notfound,siteFile,bodyParser,logger,httpclient,coreMiddleware,jsonp,workerStartTimeout,coreMiddlewares,appMiddlewares,appMiddleware/)
+        .expect('stdout', /get app configs session,security,helper,jsonp,onerror,i18n,watcher,multipart,logrotator,static,view,env,name,keys,proxy,protocolHeaders,ipHeaders,hostHeaders,pkg,baseDir,HOME,rundir,dump,notfound,siteFile,bodyParser,logger,httpclient,coreMiddleware,workerStartTimeout,coreMiddlewares,appMiddlewares,appMiddleware/)
         .expect('code', 0)
         .end();
     });
