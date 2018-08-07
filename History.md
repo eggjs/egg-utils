@@ -1,4 +1,10 @@
 
+2.4.1 / 2018-08-07
+==================
+
+**fixes**
+  * [[`413d47b`](http://github.com/eggjs/egg-utils/commit/413d47b23281e226a6bd6da76d78047214f8b64d)] - fix: not loading plugins config while getting configs (#12) (Khaidi Chu <<i@2333.moe>>)
+
 2.4.0 / 2018-04-15
 ==================
 
