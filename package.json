@@ -1,6 +1,6 @@
 {
   "name": "egg-utils",
-  "version": "2.4.1",
+  "version": "2.5.0",
   "description": "Utils for all egg projects",
   "main": "index.js",
   "files": [
