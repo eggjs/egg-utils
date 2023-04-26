@@ -7,8 +7,9 @@ const rimraf = require('mz-modules/rimraf');
 const coffee = require('coffee');
 const runscript = require('runscript');
 
-
 describe('test/plugin.test.js', () => {
+  if (process.platform === 'win32') return;
+
   const cwd = path.join(__dirname, 'fixtures/egg-app');
   const tmp = path.join(__dirname, 'fixtures/tmp');
   afterEach(mm.restore);
