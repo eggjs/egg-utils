@@ -3,6 +3,7 @@
 const path = require('path');
 const assert = require('assert');
 const mm = require('mm');
+const fs = require('fs');
 const getFrameworkPath = require('..').getFrameworkPath;
 
 describe('test/framework.test.js', () => {
@@ -130,5 +131,17 @@ describe('test/framework.test.js', () => {
       baseDir,
     });
     assert(framework === path.join(cwd, 'node_modules/egg'));
+  });
+
+  it('should get egg from monorepo root dir', () => {
+    const cwd = path.join(__dirname, 'fixtures/monorepo-app/packages/a');
+    mm(process, 'cwd', () => cwd);
+    const linkEgg = path.join(__dirname, '..', 'node_modules/egg');
+    fs.symlinkSync(path.join(__dirname, 'fixtures/monorepo-app/node_modules/egg'), linkEgg);
+    const framework = getFrameworkPath({
+      baseDir: cwd,
+    });
+    fs.unlinkSync(linkEgg);
+    assert(framework === linkEgg);
   });
 });
