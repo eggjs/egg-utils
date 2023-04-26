@@ -5,7 +5,6 @@ const assert = require('assert');
 const mm = require('mm');
 const getFrameworkPath = require('..').getFrameworkPath;
 
-
 describe('test/framework.test.js', () => {
   afterEach(mm.restore);
 
