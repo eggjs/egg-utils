@@ -15,3 +15,4 @@ dump.rdb
 .DS_Store
 test/fixtures/**/*.yml
 .nyc_output/
+test/fixtures/tmp/

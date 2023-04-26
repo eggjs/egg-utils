@@ -6,7 +6,6 @@ const mm = require('mm');
 const fs = require('fs');
 const getFrameworkPath = require('..').getFrameworkPath;
 
-
 describe('test/framework.test.js', () => {
   afterEach(mm.restore);
 
