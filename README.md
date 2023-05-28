@@ -1,5 +1,4 @@
-egg-utils
----------------
+# @eggjs/utils
 
 [![NPM version][npm-image]][npm-url]
 [![CI](https://github.com/eggjs/egg-utils/actions/workflows/nodejs.yml/badge.svg)](https://github.com/eggjs/egg-utils/actions/workflows/nodejs.yml)
@@ -18,7 +17,7 @@ Utils for all egg projects.
 ## Installation
 
 ```bash
-$ npm i egg-utils
+npm i egg-utils
 ```
 
 ## API

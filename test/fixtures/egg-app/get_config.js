@@ -1,6 +1,6 @@
 'use strict';
 
-const getConfig = require('../../../index').getConfig;
+const getConfig = require('../../..').getConfig;
 
 const configs = getConfig(JSON.parse(process.argv[2]));
 console.log(process.argv[2]);

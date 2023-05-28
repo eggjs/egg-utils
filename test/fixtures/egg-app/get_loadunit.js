@@ -1,6 +1,6 @@
 'use strict';
 
-const getLoadUnits = require('../../../index').getLoadUnits;
+const getLoadUnits = require('../../..').getLoadUnits;
 
 const units = getLoadUnits(JSON.parse(process.argv[2]));
 console.log('get %s plugin', units.filter(p => p.type === 'plugin').length);
