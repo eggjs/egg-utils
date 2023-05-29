@@ -1,5 +1,18 @@
 # Changelog
 
+## [3.0.0](https://github.com/eggjs/egg-utils/compare/v2.5.0...v3.0.0) (2023-05-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop Node.js 14 support
+
+closes https://github.com/eggjs/egg-utils/issues/18
+
+### Features
+
+* refactor with typescript ([#19](https://github.com/eggjs/egg-utils/issues/19)) ([7f6dcf5](https://github.com/eggjs/egg-utils/commit/7f6dcf5a58f6b3d7801082fb9f8c363e19763b55))
+
 ## [2.5.0](https://github.com/eggjs/egg-utils/compare/v2.4.1...v2.5.0) (2023-04-26)
 
 
