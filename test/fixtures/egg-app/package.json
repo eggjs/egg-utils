@@ -1,6 +1,7 @@
 {
   "name": "egg-app",
   "dependencies": {
-    "egg": "1.0.0"
+    "egg": "^3.16.0",
+    "framework-demo": "^1.0.1"
   }
 }

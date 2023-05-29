@@ -1,0 +1,14 @@
+{
+  "extends": "@eggjs/tsconfig",
+  "compilerOptions": {
+    "target": "ES2022",
+    "inlineSourceMap": false,
+    "outDir": "lib"
+  },
+  "exclude": [
+    "test"
+  ],
+  "include": [
+    "src"
+  ]
+}

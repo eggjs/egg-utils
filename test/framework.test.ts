@@ -1,25 +1,23 @@
-'use strict';
+import path from 'node:path';
+import { strict as assert } from 'node:assert';
+import fs from 'node:fs';
+import mm from 'mm';
+import { getFrameworkPath } from '../src';
 
-const path = require('path');
-const assert = require('assert');
-const mm = require('mm');
-const fs = require('fs');
-const getFrameworkPath = require('..').getFrameworkPath;
-
-describe('test/framework.test.js', () => {
+describe('test/framework.test.ts', () => {
   afterEach(mm.restore);
 
   it('should exist when specify baseDir', () => {
     it('should get egg by default but not exist', () => {
       const baseDir = path.join(__dirname, 'noexist');
-      try {
+      assert.throws(() => {
         getFrameworkPath({
           baseDir,
         });
-        throw new Error('should not run');
-      } catch (err) {
-        assert(err.message === `${path.join(baseDir, 'package.json')} should exist`);
-      }
+      }, (err: Error) => {
+        assert.equal(err.message, `${path.join(baseDir, 'package.json')} should exist`);
+        return true;
+      });
     });
   });
 
@@ -30,21 +28,21 @@ describe('test/framework.test.js', () => {
       baseDir,
       framework: frameworkPath,
     });
-    assert(framework === frameworkPath);
+    assert.equal(framework, frameworkPath);
   });
 
   it('should get from absolute path but not exist', () => {
     const baseDir = path.join(__dirname, 'fixtures/framework-egg-default');
     const frameworkPath = path.join(__dirname, 'noexist');
-    try {
+    assert.throws(() => {
       getFrameworkPath({
         baseDir,
         framework: frameworkPath,
       });
-      throw new Error('should not run');
-    } catch (err) {
-      assert(err.message === `${frameworkPath} should exist`);
-    }
+    }, (err: Error) => {
+      assert.equal(err.message, `${frameworkPath} should exist`);
+      return true;
+    });
   });
 
   it('should get from npm package', () => {
@@ -59,19 +57,19 @@ describe('test/framework.test.js', () => {
 
   it('should get from npm package but not exist', () => {
     const baseDir = path.join(__dirname, 'fixtures/framework-egg-default');
-    try {
+    assert.throws(() => {
       getFrameworkPath({
         baseDir,
         framework: 'noexist',
       });
-      throw new Error('should not run');
-    } catch (err) {
+    }, (err: Error) => {
       const frameworkPaths = [
         path.join(baseDir, 'node_modules'),
         path.join(process.cwd(), 'node_modules'),
       ].join(',');
-      assert(err.message === `noexist is not found in ${frameworkPaths}`);
-    }
+      assert.equal(err.message, `noexist is not found in ${frameworkPaths}`);
+      return true;
+    });
   });
 
   it('should get from pkg.egg.framework', () => {
@@ -79,23 +77,23 @@ describe('test/framework.test.js', () => {
     const framework = getFrameworkPath({
       baseDir,
     });
-    assert(framework === path.join(baseDir, 'node_modules/yadan'));
+    assert.equal(framework, path.join(baseDir, 'node_modules/yadan'));
   });
 
   it('should get from pkg.egg.framework but not exist', () => {
     const baseDir = path.join(__dirname, 'fixtures/framework-pkg-egg-noexist');
-    try {
+    assert.throws(() => {
       getFrameworkPath({
         baseDir,
       });
-      throw new Error('should not run');
-    } catch (err) {
+    }, (err: Error) => {
       const frameworkPaths = [
         path.join(baseDir, 'node_modules'),
         path.join(process.cwd(), 'node_modules'),
       ].join(',');
-      assert(err.message === `noexist is not found in ${frameworkPaths}`);
-    }
+      assert.equal(err.message, `noexist is not found in ${frameworkPaths}`);
+      return true;
+    });
   });
 
   it('should get egg by default', () => {
@@ -103,23 +101,23 @@ describe('test/framework.test.js', () => {
     const framework = getFrameworkPath({
       baseDir,
     });
-    assert(framework === path.join(baseDir, 'node_modules/egg'));
+    assert.equal(framework, path.join(baseDir, 'node_modules/egg'));
   });
 
   it('should get egg by default but not exist', () => {
     const baseDir = path.join(__dirname, 'fixtures/framework-egg-default-noexist');
-    try {
+    assert.throws(() => {
       getFrameworkPath({
         baseDir,
       });
-      throw new Error('should not run');
-    } catch (err) {
+    }, (err: Error) => {
       const frameworkPaths = [
         path.join(baseDir, 'node_modules'),
         path.join(process.cwd(), 'node_modules'),
       ].join(',');
-      assert(err.message === `egg is not found in ${frameworkPaths}`);
-    }
+      assert.equal(err.message, `egg is not found in ${frameworkPaths}`);
+      return true;
+    });
   });
 
   it('should get egg from process.cwd', () => {
@@ -130,7 +128,7 @@ describe('test/framework.test.js', () => {
     const framework = getFrameworkPath({
       baseDir,
     });
-    assert(framework === path.join(cwd, 'node_modules/egg'));
+    assert.equal(framework, path.join(cwd, 'node_modules/egg'));
   });
 
   it('should get egg from monorepo root dir', () => {
@@ -142,6 +140,6 @@ describe('test/framework.test.js', () => {
       baseDir: cwd,
     });
     fs.unlinkSync(linkEgg);
-    assert(framework === linkEgg);
+    assert.equal(framework, linkEgg);
   });
 });

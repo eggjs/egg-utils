@@ -1,13 +1,14 @@
-'use strict';
-
-const path = require('path');
-const assert = require('assert');
-const fs = require('fs');
-const utility = require('utility');
+import path from 'node:path';
+import assert from 'node:assert';
+import { existsSync } from 'node:fs';
+import { readJSONSync } from './utils';
 
 const initCwd = process.cwd();
 
-module.exports = { getFrameworkPath };
+interface Options {
+  baseDir: string;
+  framework?: string;
+}
 
 /**
  * Find the framework directory, lookup order
@@ -19,19 +20,18 @@ module.exports = { getFrameworkPath };
  * @param  {String} [options.framework] - the directory of framework
  * @return {String} frameworkPath
  */
-function getFrameworkPath({ framework, baseDir }) {
+export function getFrameworkPath(options: Options): string {
+  const { framework, baseDir } = options;
   const pkgPath = path.join(baseDir, 'package.json');
-  assert(fs.existsSync(pkgPath), `${pkgPath} should exist`);
-
+  assert(existsSync(pkgPath), `${pkgPath} should exist`);
   const moduleDir = path.join(baseDir, 'node_modules');
-  const pkg = utility.readJSONSync(pkgPath);
 
   // 1. pass framework or customEgg
   if (framework) {
     // 1.1 framework is an absolute path
     // framework: path.join(baseDir, 'node_modules/${frameworkName}')
     if (path.isAbsolute(framework)) {
-      assert(fs.existsSync(framework), `${framework} should exist`);
+      assert(existsSync(framework), `${framework} should exist`);
       return framework;
     }
     // 1.2 framework is a npm package that required by application
@@ -39,9 +39,10 @@ function getFrameworkPath({ framework, baseDir }) {
     return assertAndReturn(framework, moduleDir);
   }
 
+  const pkg = readJSONSync(pkgPath);
   // 2. framework is not specified
   // 2.1 use framework name from pkg.egg.framework
-  if (pkg.egg && pkg.egg.framework) {
+  if (pkg.egg?.framework) {
     return assertAndReturn(pkg.egg.framework, moduleDir);
   }
 
@@ -49,7 +50,7 @@ function getFrameworkPath({ framework, baseDir }) {
   return assertAndReturn('egg', moduleDir);
 }
 
-function assertAndReturn(frameworkName, moduleDir) {
+function assertAndReturn(frameworkName: string, moduleDir: string) {
   const moduleDirs = new Set([
     moduleDir,
     // find framework from process.cwd, especially for test,
@@ -68,7 +69,7 @@ function assertAndReturn(frameworkName, moduleDir) {
   }
   for (const moduleDir of moduleDirs) {
     const frameworkPath = path.join(moduleDir, frameworkName);
-    if (fs.existsSync(frameworkPath)) return frameworkPath;
+    if (existsSync(frameworkPath)) return frameworkPath;
   }
   throw new Error(`${frameworkName} is not found in ${Array.from(moduleDirs)}`);
 }

@@ -16,3 +16,4 @@ dump.rdb
 test/fixtures/**/*.yml
 .nyc_output/
 test/fixtures/tmp/
+lib/
