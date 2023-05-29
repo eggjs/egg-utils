@@ -15,7 +15,8 @@
     "ci": "egg-bin cov",
     "tsc": "tsc",
     "clean": "tsc --build --clean",
-    "prepublishOnly": "npm run clean && npm run tsc"
+    "prepublishOnly": "npm run clean && npm run tsc",
+    "contributor": "git-contributor"
   },
   "keywords": [
     "egg",
@@ -36,6 +37,7 @@
     "egg-bin": "^6.4.0",
     "eslint": "^8.41.0",
     "eslint-config-egg": "^12.2.1",
+    "git-contributor": "^2.1.5",
     "mm": "^3.3.0",
     "npm": "^9.6.7",
     "npminstall": "^7.9.0",
