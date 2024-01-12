@@ -62,7 +62,19 @@ function assertAndReturn(frameworkName: string, moduleDir: string) {
   ]);
   try {
     // find framework from global, especially for monorepo
-    const globalModuleDir = path.join(require.resolve(`${frameworkName}/package.json`), '../..');
+    let globalModuleDir;
+    // if frameworkName is scoped package, like @ali/egg
+    if (frameworkName.startsWith('@') && frameworkName.includes('/')) {
+      globalModuleDir = path.join(
+        require.resolve(`${frameworkName}/package.json`),
+        '../../..',
+      );
+    } else {
+      globalModuleDir = path.join(
+        require.resolve(`${frameworkName}/package.json`),
+        '../..',
+      );
+    }
     moduleDirs.add(globalModuleDir);
   } catch (err) {
     // ignore
