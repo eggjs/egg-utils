@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.1](https://github.com/eggjs/egg-utils/compare/v3.0.0...v3.0.1) (2024-01-12)
+
+
+### Bug Fixes
+
+* scope package resolve logic in monorepo ([#20](https://github.com/eggjs/egg-utils/issues/20)) ([f4a47b9](https://github.com/eggjs/egg-utils/commit/f4a47b908120049094b7689ec51c8c6de1066f96))
+
 ## [3.0.0](https://github.com/eggjs/egg-utils/compare/v2.5.0...v3.0.0) (2023-05-29)
 
 
