@@ -1,5 +1,53 @@
 # Changelog
 
+## [4.0.0](https://github.com/eggjs/egg-utils/compare/v3.0.1...v4.0.0) (2024-06-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop Node.js < 18.19.0 support
+
+https://github.com/eggjs/egg/issues/5257
+
+<!-- This is an auto-generated comment: release notes by coderabbit.ai
+-->
+
+## Summary by CodeRabbit
+
+- **New Features**
+- Introduced new utility functions for resolving and importing modules
+with support for CommonJS and ESM formats.
+- Added new test fixtures for CommonJS and ESM modules to validate
+module import functionality.
+
+- **Refactor**
+- Updated import statements to include file extensions (`.js`) for
+consistency and compatibility.
+	- Refactored code to use async/await for asynchronous operations.
+	- Improved path handling in tests with helper functions.
+
+- **Documentation**
+- Updated `package.json` with new scripts, dependencies, and module
+management configurations.
+
+- **Chores**
+- Enhanced `.gitignore` to exclude `.tshy*` files and `dist/` directory.
+	- Modified GitHub Actions workflows for Node.js and release processes.
+
+- **Tests**
+	- Added tests for new module import functions.
+	- Updated existing tests to reflect new import paths and async changes.
+
+- **Configuration**
+- Updated `tsconfig.json` for stricter TypeScript settings and modern
+module resolution.
+
+<!-- end of auto-generated comment: release notes by coderabbit.ai -->
+
+### Features
+
+* support @eggjs/core next version ([#21](https://github.com/eggjs/egg-utils/issues/21)) ([a37968c](https://github.com/eggjs/egg-utils/commit/a37968cc9aceb770da1410480f792df16989a36a))
+
 ## [3.0.1](https://github.com/eggjs/egg-utils/compare/v3.0.0...v3.0.1) (2024-01-12)
 
 
