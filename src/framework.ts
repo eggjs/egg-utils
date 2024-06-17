@@ -1,7 +1,7 @@
 import path from 'node:path';
 import assert from 'node:assert';
 import { existsSync } from 'node:fs';
-import { readJSONSync } from './utils';
+import { readJSONSync } from './utils.js';
 
 const initCwd = process.cwd();
 

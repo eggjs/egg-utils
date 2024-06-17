@@ -1,9 +1,10 @@
 import path from 'node:path';
 import { strict as assert } from 'node:assert';
-import utils from '../src';
+import utils from '../src/index.js';
+import { getFilepath } from './helper.js';
 
 describe('/test/getFrameworkOrEggPath.test.ts', () => {
-  const fixtures = path.join(__dirname, 'fixtures');
+  const fixtures = getFilepath('fixtures');
 
   it('get framework dir path success', () => {
     const dirpath = utils.getFrameworkOrEggPath(path.join(fixtures, 'aliyun-egg-app'));

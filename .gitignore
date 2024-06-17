@@ -17,3 +17,5 @@ test/fixtures/**/*.yml
 .nyc_output/
 test/fixtures/tmp/
 lib/
+.tshy*
+dist/

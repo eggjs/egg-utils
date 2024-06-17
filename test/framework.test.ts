@@ -2,14 +2,15 @@ import path from 'node:path';
 import { strict as assert } from 'node:assert';
 import fs from 'node:fs';
 import mm from 'mm';
-import { getFrameworkPath } from '../src';
+import { getFrameworkPath } from '../src/index.js';
+import { getFilepath, testDir } from './helper.js';
 
 describe('test/framework.test.ts', () => {
   afterEach(mm.restore);
 
   it('should exist when specify baseDir', () => {
     it('should get egg by default but not exist', () => {
-      const baseDir = path.join(__dirname, 'noexist');
+      const baseDir = getFilepath('noexist');
       assert.throws(() => {
         getFrameworkPath({
           baseDir,
@@ -22,7 +23,7 @@ describe('test/framework.test.ts', () => {
   });
 
   it('should get from absolute path', () => {
-    const baseDir = path.join(__dirname, 'fixtures/framework-egg-default');
+    const baseDir = getFilepath('framework-egg-default');
     const frameworkPath = path.join(baseDir, 'node_modules/egg');
     const framework = getFrameworkPath({
       baseDir,
@@ -32,7 +33,7 @@ describe('test/framework.test.ts', () => {
   });
 
   it('should get from absolute path but not exist', () => {
-    const baseDir = path.join(__dirname, 'fixtures/framework-egg-default');
+    const baseDir = getFilepath('framework-egg-default');
     const frameworkPath = path.join(__dirname, 'noexist');
     assert.throws(() => {
       getFrameworkPath({
@@ -46,7 +47,7 @@ describe('test/framework.test.ts', () => {
   });
 
   it('should get from npm package', () => {
-    const baseDir = path.join(__dirname, 'fixtures/framework-egg-default');
+    const baseDir = getFilepath('framework-egg-default');
     const frameworkPath = path.join(baseDir, 'node_modules/egg');
     const framework = getFrameworkPath({
       baseDir,
@@ -56,7 +57,7 @@ describe('test/framework.test.ts', () => {
   });
 
   it('should get from npm package but not exist', () => {
-    const baseDir = path.join(__dirname, 'fixtures/framework-egg-default');
+    const baseDir = getFilepath('framework-egg-default');
     assert.throws(() => {
       getFrameworkPath({
         baseDir,
@@ -73,7 +74,7 @@ describe('test/framework.test.ts', () => {
   });
 
   it('should get from pkg.egg.framework', () => {
-    const baseDir = path.join(__dirname, 'fixtures/framework-pkg-egg');
+    const baseDir = getFilepath('framework-pkg-egg');
     const framework = getFrameworkPath({
       baseDir,
     });
@@ -81,7 +82,7 @@ describe('test/framework.test.ts', () => {
   });
 
   it('should get from pkg.egg.framework but not exist', () => {
-    const baseDir = path.join(__dirname, 'fixtures/framework-pkg-egg-noexist');
+    const baseDir = getFilepath('framework-pkg-egg-noexist');
     assert.throws(() => {
       getFrameworkPath({
         baseDir,
@@ -97,7 +98,7 @@ describe('test/framework.test.ts', () => {
   });
 
   it('should get egg by default', () => {
-    const baseDir = path.join(__dirname, 'fixtures/framework-egg-default');
+    const baseDir = getFilepath('framework-egg-default');
     const framework = getFrameworkPath({
       baseDir,
     });
@@ -105,7 +106,7 @@ describe('test/framework.test.ts', () => {
   });
 
   it('should get egg by default but not exist', () => {
-    const baseDir = path.join(__dirname, 'fixtures/framework-egg-default-noexist');
+    const baseDir = getFilepath('framework-egg-default-noexist');
     assert.throws(() => {
       getFrameworkPath({
         baseDir,
@@ -121,9 +122,9 @@ describe('test/framework.test.ts', () => {
   });
 
   it('should get egg from process.cwd', () => {
-    const cwd = path.join(__dirname, 'fixtures/test-app');
+    const cwd = getFilepath('test-app');
     mm(process, 'cwd', () => cwd);
-    const baseDir = path.join(__dirname, 'fixtures/test-app/test/fixtures/app');
+    const baseDir = getFilepath('test-app/test/fixtures/app');
 
     const framework = getFrameworkPath({
       baseDir,
@@ -132,10 +133,10 @@ describe('test/framework.test.ts', () => {
   });
 
   it('should get egg from monorepo root dir', () => {
-    const cwd = path.join(__dirname, 'fixtures/monorepo-app/packages/a');
+    const cwd = getFilepath('monorepo-app/packages/a');
     mm(process, 'cwd', () => cwd);
-    const linkEgg = path.join(__dirname, '..', 'node_modules/egg');
-    fs.symlinkSync(path.join(__dirname, 'fixtures/monorepo-app/node_modules/egg'), linkEgg);
+    const linkEgg = path.join(testDir, '..', 'node_modules/egg');
+    fs.symlinkSync(getFilepath('monorepo-app/node_modules/egg'), linkEgg);
     const framework = getFrameworkPath({
       baseDir: cwd,
     });
