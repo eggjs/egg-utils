@@ -75,28 +75,6 @@ async function exists(filepath: string) {
   }
 }
 
-async function getLoader(options: LoaderOptions) {
-  let { framework, baseDir, env } = options;
-  assert(framework, 'framework is required');
-  assert(await exists(framework), `${framework} should exist`);
-  if (!(baseDir && await exists(baseDir))) {
-    baseDir = path.join(tmpDir, `egg_utils_${Date.now()}`, 'tmp_app');
-    await mkdir(baseDir, { recursive: true });
-    await writeFile(path.join(baseDir, 'package.json'), JSON.stringify({
-      name: 'tmp_app',
-    }));
-  }
-
-  const EggLoader = await findEggLoaderImplClass(options);
-  const { Application } = await importModule(framework);
-  if (env) process.env.EGG_SERVER_ENV = env;
-  return new EggLoader({
-    baseDir,
-    logger,
-    app: Object.create(Application.prototype),
-  });
-}
-
 interface IEggLoader {
   loadPlugin(): Promise<void>;
   loadConfig(): Promise<void>;
@@ -109,18 +87,48 @@ interface IEggLoaderOptions {
   baseDir: string;
   app: unknown;
   logger: object;
+  EggCoreClass?: unknown;
 }
 
 type EggLoaderImplClass<T = IEggLoader> = new(options: IEggLoaderOptions) => T;
 
-async function findEggLoaderImplClass(options: LoaderOptions): Promise<EggLoaderImplClass> {
+async function getLoader(options: LoaderOptions) {
+  assert(options.framework, 'framework is required');
+  assert(await exists(options.framework), `${options.framework} should exist`);
+  if (!(options.baseDir && await exists(options.baseDir))) {
+    options.baseDir = path.join(tmpDir, 'egg_utils', `${Date.now()}`, 'tmp_app');
+    await mkdir(options.baseDir, { recursive: true });
+    await writeFile(path.join(options.baseDir, 'package.json'), JSON.stringify({
+      name: 'tmp_app',
+    }));
+    debug('[getLoader] create baseDir: %o', options.baseDir);
+  }
+
+  const { EggCore, EggLoader } = await findEggCore(options);
+  const mod = await importModule(options.framework);
+  const Application = mod.Application ?? mod.default?.Application;
+  assert(Application, `Application not export on ${options.framework}`);
+  if (options.env) {
+    process.env.EGG_SERVER_ENV = options.env;
+  }
+  return new EggLoader({
+    baseDir: options.baseDir,
+    logger,
+    app: Object.create(Application.prototype),
+    EggCoreClass: EggCore,
+  });
+}
+
+async function findEggCore(options: LoaderOptions): Promise<{ EggCore?: object; EggLoader: EggLoaderImplClass }> {
   const baseDirRealpath = await realpath(options.baseDir);
   const frameworkRealpath = await realpath(options.framework);
   const paths = [ frameworkRealpath, baseDirRealpath ];
-  // custom framework => egg => egg/lib/loader/index.js
+  // custom framework => egg => @eggjs/core
   try {
-    const { EggLoader } = await importModule('egg', { paths });
-    return EggLoader;
+    const { EggCore, EggLoader } = await importModule('egg', { paths });
+    if (EggLoader) {
+      return { EggCore, EggLoader };
+    }
   } catch (err: any) {
     debug('[findEggCore] import "egg" from paths:%o error: %o', paths, err);
   }
@@ -128,23 +136,27 @@ async function findEggLoaderImplClass(options: LoaderOptions): Promise<EggLoader
   const name = '@eggjs/core';
   // egg => egg-core
   try {
-    const { EggLoader } = await importModule(name, { paths });
-    return EggLoader;
+    const { EggCore, EggLoader } = await importModule(name, { paths });
+    if (EggLoader) {
+      return { EggCore, EggLoader };
+    }
   } catch (err: any) {
     debug('[findEggCore] import "%s" from paths:%o error: %o', name, paths, err);
   }
 
   try {
-    const { EggLoader } = await importModule(name);
-    return EggLoader;
+    const { EggCore, EggLoader } = await importModule(name);
+    if (EggLoader) {
+      return { EggCore, EggLoader };
+    }
   } catch (err: any) {
     debug('[findEggCore] import "%s" error: %o', name, err);
-    let eggCorePath = path.join(options.baseDir, `node_modules/${name}`);
-    if (!(await exists(eggCorePath))) {
-      eggCorePath = path.join(options.framework, `node_modules/${name}`);
-    }
-    assert(await exists(eggCorePath), `Can't find ${name} from ${options.baseDir} and ${options.framework}`);
-    const { EggLoader } = await importModule(eggCorePath);
-    return EggLoader;
   }
+
+  let eggCorePath = path.join(options.baseDir, `node_modules/${name}`);
+  if (!(await exists(eggCorePath))) {
+    eggCorePath = path.join(options.framework, `node_modules/${name}`);
+  }
+  assert(await exists(eggCorePath), `Can't find ${name} from ${options.baseDir} and ${options.framework}`);
+  return await importModule(eggCorePath);
 }

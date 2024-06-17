@@ -34,7 +34,7 @@ describe('test/framework.test.ts', () => {
 
   it('should get from absolute path but not exist', () => {
     const baseDir = getFilepath('framework-egg-default');
-    const frameworkPath = path.join(__dirname, 'noexist');
+    const frameworkPath = path.join(baseDir, 'noexist');
     assert.throws(() => {
       getFrameworkPath({
         baseDir,

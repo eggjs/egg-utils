@@ -31,8 +31,7 @@ describe('test/plugin.test.ts', () => {
       });
       await coffee.fork(bin, [ args ], { cwd: tmp })
         .debug()
-        // .expect('stdout', 'get all plugins onerror,session,i18n,watcher,multipart,security,development,logrotator,schedule,static,jsonp,view\n')
-        .expect('stdout', /get all plugins/)
+        .expect('stdout', /get all plugins \["onerror",/)
         .expect('code', 0)
         .end();
     });
@@ -46,8 +45,7 @@ describe('test/plugin.test.ts', () => {
       });
       await coffee.fork(bin, [ args ], { cwd: tmp })
         .debug()
-        // .expect('stdout', 'get all plugins onerror,session,i18n,watcher,multipart,security,development,logrotator,schedule,static,jsonp,view\n')
-        .expect('stdout', /get all plugins/)
+        .expect('stdout', /get all plugins \["onerror",/)
         .expect('code', 0)
         .end();
     });
@@ -62,8 +60,7 @@ describe('test/plugin.test.ts', () => {
       });
       await coffee.fork(bin, [ args ], { cwd: tmp })
         .debug()
-        // .expect('stdout', 'get all plugins onerror,session,i18n,watcher,multipart,security,development,logrotator,schedule,static,jsonp,view,p\n')
-        .expect('stdout', /get all plugins/)
+        .expect('stdout', /get all plugins \["onerror",/)
         .expect('code', 0)
         .end();
       const plugins = await utils.getPlugins({
@@ -163,8 +160,7 @@ describe('test/plugin.test.ts', () => {
       });
       await coffee.fork(bin, [ args ], { cwd: tmp })
         .debug()
-        // .expect('stdout', /get app configs session,security,helper,jsonp,onerror,i18n,watcher,multipart,logrotator,static,view,env,name,keys,proxy,protocolHeaders,ipHeaders,hostHeaders,pkg,baseDir,HOME,rundir,dump,notfound,siteFile,bodyParser,logger,httpclient,coreMiddleware,workerStartTimeout,coreMiddlewares,appMiddlewares,appMiddleware/)
-        .expect('stdout', /get app configs/)
+        .expect('stdout', /get app configs \["session"/)
         .expect('code', 0)
         .end();
     });
@@ -178,8 +174,7 @@ describe('test/plugin.test.ts', () => {
       });
       await coffee.fork(bin, [ args ], { cwd: tmp })
         .debug()
-        // .expect('stdout', /get app configs session,security,helper,jsonp,onerror,i18n,watcher,multipart,logrotator,static,view,env,name,keys,proxy,protocolHeaders,ipHeaders,hostHeaders,pkg,baseDir,HOME,rundir,dump,notfound,siteFile,bodyParser,logger,httpclient,coreMiddleware,workerStartTimeout,coreMiddlewares,appMiddlewares,appMiddleware/)
-        .expect('stdout', /get app configs/)
+        .expect('stdout', /get app configs \["session"/)
         .expect('code', 0)
         .end();
     });
@@ -193,8 +188,7 @@ describe('test/plugin.test.ts', () => {
       });
       await coffee.fork(bin, [ args ], { cwd: tmp })
         .debug()
-        // .expect('stdout', /get app configs session,security,helper,jsonp,onerror,i18n,watcher,multipart,logrotator,static,view,env,name,keys,proxy,protocolHeaders,ipHeaders,hostHeaders,pkg,baseDir,HOME,rundir,dump,notfound,siteFile,bodyParser,logger,httpclient,coreMiddleware,workerStartTimeout,coreMiddlewares,appMiddlewares,appMiddleware/)
-        .expect('stdout', /get app configs/)
+        .expect('stdout', /get app configs \["session"/)
         .expect('code', 0)
         .end();
       const config = await utils.getConfig({
