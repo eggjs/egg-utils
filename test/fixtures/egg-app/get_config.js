@@ -1,7 +1,7 @@
-'use strict';
+const { getConfig } = require('../../..');
 
-const getConfig = require('../../..').getConfig;
-
-const configs = getConfig(JSON.parse(process.argv[2]));
-console.log(process.argv[2]);
-console.log('get app configs %s', Object.keys(configs));
+(async () => {
+  const configs = await getConfig(JSON.parse(process.argv[2]));
+  console.log(process.argv[2]);
+  console.log('get app configs %j', Object.keys(configs));
+})();

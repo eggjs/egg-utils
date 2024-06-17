@@ -1,7 +1,8 @@
 {
   "name": "egg-app",
   "dependencies": {
-    "egg": "^3.16.0",
+    "egg": "*",
+    "@eggjs/core": "*",
     "framework-demo": "^1.0.1"
   }
 }

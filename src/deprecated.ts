@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { existsSync, readdirSync } from 'node:fs';
-import { readJSONSync } from './utils';
+import { readJSONSync } from './utils.js';
 
 /**
  * Try to get framework dir path

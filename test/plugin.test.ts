@@ -5,11 +5,12 @@ import { existsSync } from 'node:fs';
 import mm from 'mm';
 import coffee from 'coffee';
 import runscript from 'runscript';
-import utils from '../src';
+import utils from '../src/index.js';
+import { getFilepath } from './helper.js';
 
 describe('test/plugin.test.ts', () => {
-  const cwd = path.join(__dirname, 'fixtures/egg-app');
-  const tmp = path.join(__dirname, 'fixtures/tmp');
+  const cwd = getFilepath('egg-app');
+  const tmp = getFilepath('tmp');
 
   beforeEach(async () => {
     await rm(tmp, { force: true, recursive: true });
@@ -30,8 +31,7 @@ describe('test/plugin.test.ts', () => {
       });
       await coffee.fork(bin, [ args ], { cwd: tmp })
         .debug()
-        // .expect('stdout', 'get all plugins onerror,session,i18n,watcher,multipart,security,development,logrotator,schedule,static,jsonp,view\n')
-        .expect('stdout', /get all plugins/)
+        .expect('stdout', /get all plugins \["onerror",/)
         .expect('code', 0)
         .end();
     });
@@ -45,8 +45,7 @@ describe('test/plugin.test.ts', () => {
       });
       await coffee.fork(bin, [ args ], { cwd: tmp })
         .debug()
-        // .expect('stdout', 'get all plugins onerror,session,i18n,watcher,multipart,security,development,logrotator,schedule,static,jsonp,view\n')
-        .expect('stdout', /get all plugins/)
+        .expect('stdout', /get all plugins \["onerror",/)
         .expect('code', 0)
         .end();
     });
@@ -61,11 +60,10 @@ describe('test/plugin.test.ts', () => {
       });
       await coffee.fork(bin, [ args ], { cwd: tmp })
         .debug()
-        // .expect('stdout', 'get all plugins onerror,session,i18n,watcher,multipart,security,development,logrotator,schedule,static,jsonp,view,p\n')
-        .expect('stdout', /get all plugins/)
+        .expect('stdout', /get all plugins \["onerror",/)
         .expect('code', 0)
         .end();
-      const plugins = utils.getPlugins({
+      const plugins = await utils.getPlugins({
         baseDir: tmp,
         framework: path.join(tmp, 'node_modules/egg'),
       });
@@ -107,7 +105,7 @@ describe('test/plugin.test.ts', () => {
         .expect('stdout', /get 1 app/)
         .expect('code', 0)
         .end();
-      const units = utils.getLoadUnits({
+      const units = await utils.getLoadUnits({
         baseDir: tmp,
         framework: path.join(tmp, 'node_modules/egg'),
       });
@@ -162,8 +160,7 @@ describe('test/plugin.test.ts', () => {
       });
       await coffee.fork(bin, [ args ], { cwd: tmp })
         .debug()
-        // .expect('stdout', /get app configs session,security,helper,jsonp,onerror,i18n,watcher,multipart,logrotator,static,view,env,name,keys,proxy,protocolHeaders,ipHeaders,hostHeaders,pkg,baseDir,HOME,rundir,dump,notfound,siteFile,bodyParser,logger,httpclient,coreMiddleware,workerStartTimeout,coreMiddlewares,appMiddlewares,appMiddleware/)
-        .expect('stdout', /get app configs/)
+        .expect('stdout', /get app configs \["session"/)
         .expect('code', 0)
         .end();
     });
@@ -177,8 +174,7 @@ describe('test/plugin.test.ts', () => {
       });
       await coffee.fork(bin, [ args ], { cwd: tmp })
         .debug()
-        // .expect('stdout', /get app configs session,security,helper,jsonp,onerror,i18n,watcher,multipart,logrotator,static,view,env,name,keys,proxy,protocolHeaders,ipHeaders,hostHeaders,pkg,baseDir,HOME,rundir,dump,notfound,siteFile,bodyParser,logger,httpclient,coreMiddleware,workerStartTimeout,coreMiddlewares,appMiddlewares,appMiddleware/)
-        .expect('stdout', /get app configs/)
+        .expect('stdout', /get app configs \["session"/)
         .expect('code', 0)
         .end();
     });
@@ -192,11 +188,10 @@ describe('test/plugin.test.ts', () => {
       });
       await coffee.fork(bin, [ args ], { cwd: tmp })
         .debug()
-        // .expect('stdout', /get app configs session,security,helper,jsonp,onerror,i18n,watcher,multipart,logrotator,static,view,env,name,keys,proxy,protocolHeaders,ipHeaders,hostHeaders,pkg,baseDir,HOME,rundir,dump,notfound,siteFile,bodyParser,logger,httpclient,coreMiddleware,workerStartTimeout,coreMiddlewares,appMiddlewares,appMiddleware/)
-        .expect('stdout', /get app configs/)
+        .expect('stdout', /get app configs \["session"/)
         .expect('code', 0)
         .end();
-      const config = utils.getConfig({
+      const config = await utils.getConfig({
         baseDir: tmp,
         framework: path.join(tmp, 'node_modules/framework-demo'),
       });
