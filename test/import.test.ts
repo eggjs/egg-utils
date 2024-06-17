@@ -84,6 +84,40 @@ describe('test/import.test.ts', () => {
       assert.equal(obj.one, 1);
     });
 
+    it('should work on ts-module', async () => {
+      let obj = await importModule(getFilepath('ts-module'));
+      assert.deepEqual(Object.keys(obj), [ 'default', 'one' ]);
+      assert.equal(obj.one, 1);
+      assert.deepEqual(obj.default, { foo: 'bar' });
+
+      // obj = await importModule(getFilepath('ts-module'), { importDefaultOnly: true });
+      // assert.deepEqual(obj, { foo: 'bar' });
+
+      // obj = await importModule(getFilepath('ts-module/exports'));
+      // assert.deepEqual(Object.keys(obj), [ 'foo', 'one' ]);
+      // assert.equal(obj.foo, 'bar');
+      // assert.equal(obj.one, 1);
+
+      // obj = await importModule(getFilepath('ts-module/exports'), { importDefaultOnly: true });
+      // assert.deepEqual(Object.keys(obj), [ 'foo', 'one' ]);
+      // assert.equal(obj.foo, 'bar');
+      // assert.equal(obj.one, 1);
+
+      // obj = await importModule(getFilepath('ts-module/exports.ts'));
+      // assert.deepEqual(Object.keys(obj), [ 'foo', 'one' ]);
+      // assert.equal(obj.foo, 'bar');
+      // assert.equal(obj.one, 1);
+
+      obj = await importModule(getFilepath('ts-module/mod'));
+      assert.deepEqual(Object.keys(obj), [ 'default' ]);
+      assert.equal(typeof obj.default, 'function');
+
+      obj = await importModule(getFilepath('ts-module/mod.ts'), {
+        importDefaultOnly: true,
+      });
+      assert.equal(typeof obj, 'function');
+    });
+
     it('should support module.exports = null', async () => {
       assert.equal(await importModule(getFilepath('cjs/module-exports-null.js'), {
         importDefaultOnly: true,
