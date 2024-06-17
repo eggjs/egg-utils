@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.0.1](https://github.com/eggjs/egg-utils/compare/v4.0.0...v4.0.1) (2024-06-17)
+
+
+### Bug Fixes
+
+* support export default null ([#22](https://github.com/eggjs/egg-utils/issues/22)) ([61a8a98](https://github.com/eggjs/egg-utils/commit/61a8a9857df89dc6c79c4e1011f89a408f88d99f))
+
 ## [4.0.0](https://github.com/eggjs/egg-utils/compare/v3.0.1...v4.0.0) (2024-06-17)
 
 
