@@ -55,7 +55,7 @@ export async function importModule(filepath: string, options?: ImportModuleOptio
     //   one: 1,
     //   [Symbol(Symbol.toStringTag)]: 'Module'
     // }
-    if (obj?.__esModule === true && obj?.default?.__esModule === true) {
+    if (obj?.default?.__esModule === true && 'default' in obj?.default) {
       // 兼容 cjs 模拟 esm 的导出格式
       // {
       //   __esModule: true,
@@ -65,6 +65,18 @@ export async function importModule(filepath: string, options?: ImportModuleOptio
       //       fn: [Function: fn] { [length]: 0, [name]: 'fn' },
       //       foo: 'bar',
       //       one: 1
+      //     }
+      //   },
+      //   [Symbol(Symbol.toStringTag)]: 'Module'
+      // }
+      // 兼容 ts module
+      // {
+      //   default: {
+      //     [__esModule]: true,
+      //     default: <ref *1> [Function: default_1] {
+      //       [length]: 0,
+      //       [name]: 'default_1',
+      //       [prototype]: { [constructor]: [Circular *1] }
       //     }
       //   },
       //   [Symbol(Symbol.toStringTag)]: 'Module'
