@@ -83,5 +83,29 @@ describe('test/import.test.ts', () => {
       assert.equal(obj.foo, 'bar');
       assert.equal(obj.one, 1);
     });
+
+    it('should support module.exports = null', async () => {
+      assert.equal(await importModule(getFilepath('cjs/module-exports-null.js'), {
+        importDefaultOnly: true,
+      }), null);
+      assert.equal(await importModule(getFilepath('cjs/module-exports-null'), {
+        importDefaultOnly: true,
+      }), null);
+      assert.equal((await importModule(getFilepath('cjs/module-exports-null'), {
+        importDefaultOnly: false,
+      })).default, null);
+    });
+
+    it('should support export default null', async () => {
+      assert.equal(await importModule(getFilepath('esm/export-default-null.js'), {
+        importDefaultOnly: true,
+      }), null);
+      assert.equal(await importModule(getFilepath('esm/export-default-null'), {
+        importDefaultOnly: true,
+      }), null);
+      assert.equal((await importModule(getFilepath('esm/export-default-null.js'), {
+        importDefaultOnly: false,
+      })).default, null);
+    });
   });
 });
