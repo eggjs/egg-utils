@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.0.2](https://github.com/eggjs/egg-utils/compare/v4.0.1...v4.0.2) (2024-06-17)
+
+
+### Bug Fixes
+
+* support ts-module ([#23](https://github.com/eggjs/egg-utils/issues/23)) ([c032932](https://github.com/eggjs/egg-utils/commit/c0329323489724b59a79c9715fa793d0c90a3b88))
+
 ## [4.0.1](https://github.com/eggjs/egg-utils/compare/v4.0.0...v4.0.1) (2024-06-17)
 
 
