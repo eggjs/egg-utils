@@ -35,7 +35,7 @@ export async function importModule(filepath: string, options?: ImportModuleOptio
     // commonjs
     obj = require(moduleFilePath);
     debug('[importModule] require %o => %o', filepath, obj);
-    if (obj?.__esModule === true && obj?.default) {
+    if (obj?.__esModule === true && 'default' in obj) {
       // 兼容 cjs 模拟 esm 的导出格式
       // {
       //   __esModule: true,
@@ -72,7 +72,7 @@ export async function importModule(filepath: string, options?: ImportModuleOptio
       obj = obj.default;
     }
     if (options?.importDefaultOnly) {
-      if (obj.default) {
+      if ('default' in obj) {
         obj = obj.default;
       }
     }
