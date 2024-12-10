@@ -4,7 +4,7 @@ import { rm, cp } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import mm from 'mm';
 import coffee from 'coffee';
-import runscript from 'runscript';
+import { runscript } from 'runscript';
 import utils from '../src/index.js';
 import { getFilepath } from './helper.js';
 

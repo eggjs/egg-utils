@@ -15,7 +15,6 @@
     "test-local": "egg-bin test",
     "preci": "npm run prepublishOnly",
     "ci": "npm run lint && egg-bin cov && npm run prepublishOnly",
-    "contributor": "git-contributor",
     "prepublishOnly": "tshy && tshy-after"
   },
   "keywords": [
@@ -32,16 +31,15 @@
   "devDependencies": {
     "@eggjs/tsconfig": "1",
     "@types/mocha": "10",
-    "@types/node": "20",
+    "@types/node": "22",
     "coffee": "5",
     "egg-bin": "6",
     "eslint": "8",
-    "eslint-config-egg": "13",
-    "git-contributor": "2",
+    "eslint-config-egg": "14",
     "mm": "3",
     "npminstall": "7",
-    "runscript": "1",
-    "tshy": "1",
+    "runscript": "2",
+    "tshy": "3",
     "tshy-after": "1",
     "typescript": "5"
   },
@@ -60,17 +58,16 @@
     "./package.json": "./package.json",
     ".": {
       "import": {
-        "source": "./src/index.ts",
         "types": "./dist/esm/index.d.ts",
         "default": "./dist/esm/index.js"
       },
       "require": {
-        "source": "./src/index.ts",
         "types": "./dist/commonjs/index.d.ts",
         "default": "./dist/commonjs/index.js"
       }
     }
   },
   "main": "./dist/commonjs/index.js",
-  "types": "./dist/commonjs/index.d.ts"
+  "types": "./dist/commonjs/index.d.ts",
+  "module": "./dist/esm/index.js"
 }
