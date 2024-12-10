@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { strict as assert } from 'node:assert';
-import { rm, cp } from 'node:fs/promises';
+import { rm } from 'node:fs/promises';
+import fsPromise from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import mm from 'mm';
 import coffee from 'coffee';
@@ -14,7 +15,12 @@ describe('test/plugin.test.ts', () => {
 
   beforeEach(async () => {
     await rm(tmp, { force: true, recursive: true });
-    await cp(cwd, tmp, { force: true, recursive: true });
+    if (fsPromise.cp) {
+      await fsPromise.cp(cwd, tmp, { force: true, recursive: true });
+    } else {
+      // Node.js 14
+      await runscript(`cp -rf ${cwd} ${tmp}`);
+    }
     assert(existsSync(tmp), `${tmp} not exists`);
   });
   afterEach(() => rm(tmp, { force: true, recursive: true }));

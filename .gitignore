@@ -19,3 +19,5 @@ test/fixtures/tmp/
 lib/
 .tshy*
 dist/
+package-lock.json
+.package-lock.json
