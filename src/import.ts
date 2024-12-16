@@ -13,6 +13,8 @@ export interface ImportResolveOptions {
 export interface ImportModuleOptions extends ImportResolveOptions {
   // only import export default object
   importDefaultOnly?: boolean;
+  // esm only
+  esmOnly?: boolean;
 }
 
 export function importResolve(filepath: string, options?: ImportResolveOptions) {
@@ -31,7 +33,7 @@ export function importResolve(filepath: string, options?: ImportResolveOptions) 
 export async function importModule(filepath: string, options?: ImportModuleOptions) {
   const moduleFilePath = importResolve(filepath, options);
   let obj: any;
-  if (typeof require === 'function') {
+  if (typeof require === 'function' && options?.esmOnly !== true) {
     // commonjs
     obj = require(moduleFilePath);
     debug('[importModule] require %o => %o', filepath, obj);
@@ -45,7 +47,7 @@ export async function importModule(filepath: string, options?: ImportModuleOptio
     }
   } else {
     // esm
-    debug('[importModule] await import start: %o', filepath);
+    debug('[importModule] await import start: %o', filepath, typeof require, process.features.require_module);
     const fileUrl = pathToFileURL(moduleFilePath).toString();
     obj = await import(fileUrl);
     debug('[importModule] await import end: %o => %o', filepath, obj);

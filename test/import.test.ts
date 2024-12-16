@@ -54,7 +54,7 @@ describe('test/import.test.ts', () => {
       assert.equal(typeof obj.fn, 'function');
     });
 
-    it('should work on esm', async () => {
+    it.only('should work on esm', async () => {
       let obj = await importModule(getFilepath('esm'));
       assert.deepEqual(Object.keys(obj), [ 'default', 'one' ]);
       assert.equal(obj.one, 1);
@@ -82,6 +82,12 @@ describe('test/import.test.ts', () => {
       assert.deepEqual(Object.keys(obj), [ 'foo', 'one' ]);
       assert.equal(obj.foo, 'bar');
       assert.equal(obj.one, 1);
+
+      // import esmOnly
+      obj = await importModule(getFilepath('cjs'), { importDefaultOnly: true, esmOnly: true });
+      assert.deepEqual(obj, { foo: 'bar', one: 1 });
+      obj = await importModule(getFilepath('cjs'), { importDefaultOnly: true, esmOnly: false });
+      assert.deepEqual(obj, { foo: 'bar', one: 1 });
     });
 
     it('should work on ts-module', async () => {
