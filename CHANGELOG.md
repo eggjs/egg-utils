@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.0.3](https://github.com/eggjs/egg-utils/compare/v4.0.2...v4.0.3) (2024-12-17)
+
+
+### Bug Fixes
+
+* set default require.resolve paths to cwd ([#25](https://github.com/eggjs/egg-utils/issues/25)) ([84e16ed](https://github.com/eggjs/egg-utils/commit/84e16ededd0eca1a5a3412aa8934cd0cd4e02567))
+
 ## [4.0.2](https://github.com/eggjs/egg-utils/compare/v4.0.1...v4.0.2) (2024-06-17)
 
 
