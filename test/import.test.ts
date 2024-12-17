@@ -16,7 +16,12 @@ describe('test/import.test.ts', () => {
   describe('importModule()', () => {
     it('should work on cjs', async () => {
       let obj = await importModule(getFilepath('cjs'));
-      assert.deepEqual(Object.keys(obj), [ 'default', 'one' ]);
+      if (process.version.startsWith('v23.')) {
+        // support `module.exports` on Node.js >=23
+        assert.deepEqual(Object.keys(obj), [ 'default', 'module.exports', 'one' ]);
+      } else {
+        assert.deepEqual(Object.keys(obj), [ 'default', 'one' ]);
+      }
       assert.equal(obj.one, 1);
       assert.deepEqual(obj.default, { foo: 'bar', one: 1 });
 
@@ -24,19 +29,34 @@ describe('test/import.test.ts', () => {
       assert.deepEqual(obj, { foo: 'bar', one: 1 });
 
       obj = await importModule(getFilepath('cjs/exports'));
-      assert.deepEqual(Object.keys(obj), [ 'default', 'foo', 'one' ]);
+      if (process.version.startsWith('v23.')) {
+        // support `module.exports` on Node.js >=23
+        assert.deepEqual(Object.keys(obj), [ 'default', 'foo', 'module.exports', 'one' ]);
+      } else {
+        assert.deepEqual(Object.keys(obj), [ 'default', 'foo', 'one' ]);
+      }
       assert.equal(obj.foo, 'bar');
       assert.equal(obj.one, 1);
       assert.deepEqual(obj.default, { foo: 'bar', one: 1 });
 
       obj = await importModule(getFilepath('cjs/exports.js'));
-      assert.deepEqual(Object.keys(obj), [ 'default', 'foo', 'one' ]);
+      if (process.version.startsWith('v23.')) {
+        // support `module.exports` on Node.js >=23
+        assert.deepEqual(Object.keys(obj), [ 'default', 'foo', 'module.exports', 'one' ]);
+      } else {
+        assert.deepEqual(Object.keys(obj), [ 'default', 'foo', 'one' ]);
+      }
       assert.equal(obj.foo, 'bar');
       assert.equal(obj.one, 1);
       assert.deepEqual(obj.default, { foo: 'bar', one: 1 });
 
       obj = await importModule(getFilepath('cjs/exports.cjs'));
-      assert.deepEqual(Object.keys(obj), [ 'default', 'foo', 'one' ]);
+      if (process.version.startsWith('v23.')) {
+        // support `module.exports` on Node.js >=23
+        assert.deepEqual(Object.keys(obj), [ 'default', 'foo', 'module.exports', 'one' ]);
+      } else {
+        assert.deepEqual(Object.keys(obj), [ 'default', 'foo', 'one' ]);
+      }
       assert.equal(obj.foo, 'bar');
       assert.equal(obj.one, 1);
       assert.deepEqual(obj.default, { foo: 'bar', one: 1 });
