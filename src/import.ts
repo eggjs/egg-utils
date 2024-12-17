@@ -2,7 +2,7 @@ import { debuglog } from 'node:util';
 import { createRequire } from 'node:module';
 import { pathToFileURL } from 'node:url';
 
-const debug = debuglog('@eggjs/utils:loader');
+const debug = debuglog('@eggjs/utils:import');
 
 let _customRequire: NodeRequire;
 
@@ -16,14 +16,18 @@ export interface ImportModuleOptions extends ImportResolveOptions {
 }
 
 export function importResolve(filepath: string, options?: ImportResolveOptions) {
+  const cwd = process.cwd();
   if (!_customRequire) {
     if (typeof require !== 'undefined') {
       _customRequire = require;
     } else {
-      _customRequire = createRequire(process.cwd());
+      _customRequire = createRequire(cwd);
     }
   }
-  const moduleFilePath = _customRequire.resolve(filepath, options);
+  const paths = options?.paths ?? [ cwd ];
+  const moduleFilePath = _customRequire.resolve(filepath, {
+    paths,
+  });
   debug('[importResolve] %o, options: %o => %o', filepath, options, moduleFilePath);
   return moduleFilePath;
 }
