@@ -24,7 +24,7 @@
   "author": "fengmk2 <fengmk2@gmail.com> (https://github.com/fengmk2)",
   "repository": {
     "type": "git",
-    "url": "git://github.com/eggjs/egg-utils.git"
+    "url": "git://github.com/eggjs/utils.git"
   },
   "license": "MIT",
   "dependencies": {},
